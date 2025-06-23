@@ -1,14 +1,23 @@
 from textnode import *
 from htmlnode import *
+import shutil
+import os
+from copytree import copytree
+from gen_page import *
 print("hello world")
 
 def main():
-    ntn = TextNode("This is some anchor text", "LINK", "https://www.boot.dev")
-    print(f"TextNode(text: {ntn.text}, text_type: {ntn.text_type}, url: {ntn.url})")
+    #delete file in public folder
+    for filename in os.listdir('public'):
+        filepath = os.path.join('public', filename)
+    #copy static files to public folder
+    copytree("static","public")
+    #generate pages from markdown files
+    generate_pages_recursive("content", "template.html", "public")
     
     
-    nhn = HTMLNode("a", "This is an anchor", None, {"href": "https://www.boot.dev", "target": "_blank"})
-    print(f"HTMLNode(tag: {nhn.tag}, value: {nhn.value}, children: {nhn.children}, props: {nhn.props})")
+    
+    
     
 if __name__ == "__main__":
     main()
